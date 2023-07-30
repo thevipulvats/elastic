@@ -1,1 +1,46 @@
+# create index
+PUT customers
 
+# check shards
+GET _cat/shards
+
+# insert
+POST customers/_doc
+{
+  "name":"Ram",
+  "age":20
+}
+
+# insert another
+POST customers/_doc
+{
+  "name":"Akshit",
+  "age":25
+}
+
+# search all
+GET customers/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#update by query
+POST customers/_update_by_query
+{
+  "query": {
+    "match_all": {}
+  },
+  "script": {
+    "source": "ctx._source.age++"
+  }
+}
+
+#delete by query
+POST customers/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
