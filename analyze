@@ -1,0 +1,18 @@
+POST _analyze
+{
+  "text": "Hello, How are you ? What's up ? This is so high-end"
+}
+
+POST _analyze
+{
+  "text": "Hello, How are you ? What's up ? This is so high-end",
+  "analyzer": "standard"
+}
+
+POST _analyze
+{
+  "text": "Hello, How are you ? What's up ? This is so high-end",
+  "char_filter": [],
+  "tokenizer": "standard",
+  "filter": ["lowercase"]
+}
