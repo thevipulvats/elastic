@@ -1,0 +1,48 @@
+PUT /books
+{
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text"
+      },
+      "authors": {
+        "type": "nested",
+        "properties": {
+          "name": { "type": "text" },
+          "age": { "type": "integer" },
+          "nationality": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+POST /books/_bulk
+{ "index": {} }
+{ "title": "Book 1", "authors": [ { "name": "Author A", "age": 35, "nationality": "Country X" }, { "name": "Author B", "age": 42, "nationality": "Country Y" } ] }
+{ "index": {} }
+{ "title": "Book 2", "authors": [ { "name": "Author C", "age": 28, "nationality": "Country Z" } ] }
+{ "index": {} }
+{ "title": "Book 3", "authors": [ { "name": "Author A", "age": 29, "nationality": "Country X" }, { "name": "Author D", "age": 50, "nationality": "Country Y" } ] }
+
+
+
+
+GET books/_search
+{
+  "size": 0,
+  "aggs": {
+    "bucket_of_all_authors": {
+      "nested": {
+        "path": "authors"
+      },
+      "aggs": {
+        "AVERAGE_OF_ALL": {
+          "avg": {
+            "field": "authors.age"
+          }
+        }
+      }
+    }
+  }
+}
